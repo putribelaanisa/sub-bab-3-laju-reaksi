@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Persamaan Laju Reaksi dan Analisis Data</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FBF6EA;--sage:#D9E8D5;--pink:#F4D6DA;--blue:#D5E6F4;--lav:#E5DCF3;--peach:#FCDEC9;--ink:#2E3A3F;--sageD:#40714A;--pinkD:#A94B60;--blueD:#2F6A9C;--lavD:#6248A0;--peachD:#B2611F;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.65 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;font-weight:600;line-height:1.25;margin:0 0 .5em}
+main{max-width:860px;margin:0 auto;padding:16px}
+header{position:relative;background:var(--lav);border-radius:28px;padding:34px 24px;margin:12px 0 22px;text-align:center;border:3px solid var(--lavD)}
+header h1{font-size:clamp(1.7rem,6vw,2.6rem);color:var(--lavD)}
+header p{margin:0 auto;max-width:560px}
+.badge{display:inline-block;background:var(--peach);color:var(--peachD);border-radius:99px;padding:2px 14px;font-weight:700;margin-bottom:10px}
+section{margin:30px 0}
+section>h2{font-size:1.6rem;color:var(--ink);display:flex;gap:10px;align-items:center}
+section>h2 .n{background:var(--pinkD);color:#fff;border-radius:50%;min-width:38px;height:38px;display:grid;place-items:center;font-size:1.05rem}
+.card{position:relative;border-radius:22px;padding:20px 22px;margin:14px 0;box-shadow:0 2px 6px rgba(46,58,63,.12)}
+.card h3{font-size:1.15rem;padding-right:54px}
+.sage{background:var(--sage)}.pink{background:var(--pink)}.blue{background:var(--blue)}.lav{background:var(--lav)}.peach{background:var(--peach)}.white{background:#FFFDF7;border:2px solid var(--sage)}
+.deco{position:absolute;top:10px;right:12px;width:40px;height:40px;pointer-events:none}
+.formula{background:#FFFDF7;border:3px dashed var(--lavD);border-radius:18px;padding:14px;text-align:center;font-size:clamp(1.3rem,5vw,1.9rem);font-weight:700;margin:12px 0;overflow-x:auto}
+.formula.sm{font-size:1.3rem}
+.tag{font-weight:700}.ic{margin-right:6px}
+.fix{background:var(--sage);border-radius:6px;padding:0 6px;font-weight:700}
+.chg{background:var(--peach);border-radius:6px;padding:0 6px;font-weight:700}
+.res{background:var(--blue);border:3px solid var(--blueD);border-radius:14px;padding:10px 14px;font-weight:700;margin:10px 0}
+.unit{color:var(--pinkD);font-weight:800;background:var(--pink);border-radius:6px;padding:0 6px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:#FFFDF7;border-radius:12px;overflow:hidden;font-size:.97rem}
+th,td{border:1px solid #cfc8b5;padding:7px 10px;text-align:center}
+th{background:var(--blue)}
+td.fx{background:var(--sage)}td.cg{background:var(--peach)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.box{border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid}
+.dk{background:#FFFDF7;border-color:var(--sageD)}.dt{background:#FFFDF7;border-color:var(--blueD)}.ps{background:#FFFDF7;border-color:var(--peachD)}.ks{background:#FFFDF7;border-color:var(--lavD)}
+.box b.l{display:block;margin-bottom:2px}
+.tips{background:#FFFDF7;border:2px dotted var(--peachD);border-radius:14px;padding:8px 14px;margin:10px 0}
+svg text{font-family:Nunito,sans-serif}
+.q{background:#FFFDF7;border:3px solid var(--blueD);border-radius:20px;padding:16px 18px;margin:18px 0}
+.q h3{font-size:1.05rem}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid #cfc8b5;border-radius:12px;padding:9px 12px;margin:8px 0;cursor:pointer;background:var(--cream);min-height:44px}
+.opt input{width:22px;height:22px;margin-top:3px;flex:none;accent-color:var(--lavD)}
+.opt.sel{background:var(--lav);border-color:var(--lavD)}
+.opt.ok{background:var(--sage);border-color:var(--sageD)}.opt.bad{background:var(--pink);border-color:var(--pinkD)}
+.why{display:none;font-size:.93rem;margin:4px 0 0;font-weight:600}
+.checked .why{display:block}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+button{font:700 1rem Nunito,sans-serif;border:3px solid;border-radius:99px;padding:10px 24px;cursor:pointer;min-height:46px}
+#cek{background:var(--sage);border-color:var(--sageD);color:var(--sageD)}
+#ulang{background:var(--peach);border-color:var(--peachD);color:var(--peachD)}
+button:focus-visible,.opt:focus-within{outline:3px solid var(--lavD);outline-offset:2px}
+#skor{display:none;background:var(--blue);border:3px solid var(--blueD);border-radius:18px;padding:12px 16px;font-weight:700;font-size:1.1rem}
+.qs{font-weight:700;color:var(--blueD);display:none}.checked .qs{display:block}
+footer{text-align:center;padding:24px 0 8px;position:relative}
+@media(max-width:520px){main{padding:10px}.card{padding:16px}body{font-size:16px}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="flask" viewBox="0 0 40 40"><path d="M15 4h10M17 4v12L7 33a3 3 0 0 0 3 4h20a3 3 0 0 0 3-4L23 16V4" fill="#fff" stroke="#6248A0" stroke-width="2.4" stroke-linejoin="round"/><path d="M11 28h18l3 5a2 2 0 0 1-2 3H10a2 2 0 0 1-2-3z" fill="#F4D6DA"/></symbol>
+<symbol id="mol" viewBox="0 0 40 40"><path d="M10 28l10-10 11 6M20 18l2-11" stroke="#2F6A9C" stroke-width="2.4" fill="none"/><circle cx="10" cy="28" r="6" fill="#D5E6F4" stroke="#2F6A9C" stroke-width="2.4"/><circle cx="20" cy="18" r="5" fill="#FCDEC9" stroke="#B2611F" stroke-width="2.4"/><circle cx="31" cy="24" r="5" fill="#D9E8D5" stroke="#40714A" stroke-width="2.4"/><circle cx="22" cy="7" r="3.5" fill="#F4D6DA" stroke="#A94B60" stroke-width="2.4"/></symbol>
+<symbol id="tube" viewBox="0 0 40 40"><path d="M14 4h12M16 4v26a4 4 0 0 0 8 0V4" fill="#fff" stroke="#40714A" stroke-width="2.4"/><path d="M16 20h8v10a4 4 0 0 1-8 0z" fill="#D9E8D5"/></symbol>
+<symbol id="star" viewBox="0 0 40 40"><path d="M20 4l4.5 11 11.5 1-9 7.5 3 11.5-10-6.5-10 6.5 3-11.5-9-7.5 11.5-1z" fill="#FCDEC9" stroke="#B2611F" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+<symbol id="atom" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="17" ry="7" fill="none" stroke="#A94B60" stroke-width="2.2"/><ellipse cx="20" cy="20" rx="17" ry="7" transform="rotate(60 20 20)" fill="none" stroke="#A94B60" stroke-width="2.2"/><ellipse cx="20" cy="20" rx="17" ry="7" transform="rotate(120 20 20)" fill="none" stroke="#A94B60" stroke-width="2.2"/><circle cx="20" cy="20" r="3.5" fill="#F4D6DA" stroke="#A94B60" stroke-width="2"/></symbol>
+</defs></svg>
+<main>
+<header>
+<svg class="deco" style="left:14px;right:auto;width:52px;height:52px" aria-hidden="true"><use href="#flask"/></svg>
+<svg class="deco" style="top:12px;right:16px;width:56px;height:56px" aria-hidden="true"><use href="#atom"/></svg>
+<svg class="deco" style="top:auto;bottom:12px;left:20px;width:36px;height:36px" aria-hidden="true"><use href="#star"/></svg>
+<svg class="deco" style="top:auto;bottom:10px;right:22px;width:48px;height:48px" aria-hidden="true"><use href="#mol"/></svg>
+<div class="badge">Kimia Kelas XI · Laju Reaksi</div>
+<h1>Persamaan Laju Reaksi dan Analisis Data</h1>
+<p>Subbab 3. Belajar membaca tabel eksperimen, menentukan orde, menuliskan persamaan laju, dan menghitung tetapan laju (k).</p>
+</header>
+
+<section><h2><span class="n">1</span>Pengantar persamaan laju reaksi</h2>
+<div class="card sage"><svg class="deco" aria-hidden="true"><use href="#tube"/></svg><h3><span class="ic">💡</span>Konsep Penting</h3>
+<p>Laju reaksi dipengaruhi oleh konsentrasi pereaksi. <b>Persamaan laju reaksi</b> menyatakan hubungan antara laju reaksi dan konsentrasi pereaksi yang masing-masing dipangkatkan dengan orde reaksinya.</p>
+<p>Contoh dalam bahan ajar: reaksi H₂(g) + I₂(g) → 2HI(g) memiliki orde 1 terhadap H₂ dan orde 1 terhadap I₂, sehingga <b>v = k[H₂][I₂]</b>. Reaksi NO₂(g) + CO(g) → NO(g) + CO₂(g) memiliki orde 2 terhadap NO₂ dan orde 0 terhadap CO, sehingga <b>v = k[NO₂]²</b>.</p></div></section>
+
+<section><h2><span class="n">2</span>Bentuk umum dan komponen</h2>
+<div class="formula">v = k [A]<sup>x</sup> [B]<sup>y</sup></div>
+<div class="grid3">
+<div class="card blue"><h3>v</h3><p>Laju reaksi, satuan mol/L·s (M/s).</p></div>
+<div class="card pink"><h3>k</h3><p>Tetapan laju reaksi. Nilainya tetap pada suhu tertentu.</p></div>
+<div class="card peach"><h3>[A] dan [B]</h3><p>Konsentrasi pereaksi (mol/L).</p></div>
+<div class="card lav"><h3>x dan y</h3><p>Orde reaksi terhadap A dan terhadap B.</p></div>
+<div class="card sage"><h3>x + y</h3><p>Orde reaksi total.</p></div></div>
+<div class="tips"><b>✨ Tips:</b> Orde reaksi hanya dapat ditentukan lewat <b>data eksperimen</b>. Orde <b>tidak</b> dapat langsung diambil dari koefisien persamaan reaksi. Pada NO₂ + CO → NO + CO₂, koefisien CO adalah 1, tetapi orde CO ternyata 0.</div></section>
+
+<section><h2><span class="n">3</span>Orde reaksi: nol, satu, dan dua</h2>
+<div class="grid3">
+<div class="card sage"><svg class="deco" aria-hidden="true"><use href="#star"/></svg><h3>Orde nol</h3><div class="formula sm">v = k[A]<sup>0</sup> = k</div><p>Perubahan [A] tidak mengubah laju (kondisi lain tetap). Contoh: [A] dijadikan 3 kali, laju tetap.</p></div>
+<div class="card blue"><svg class="deco" aria-hidden="true"><use href="#mol"/></svg><h3>Orde satu</h3><div class="formula sm">v = k[A]</div><p>Laju berbanding lurus dengan [A]. Contoh: [A] dijadikan 3 kali, laju menjadi 3 kali.</p></div>
+<div class="card pink"><svg class="deco" aria-hidden="true"><use href="#atom"/></svg><h3>Orde dua</h3><div class="formula sm">v = k[A]<sup>2</sup></div><p>Laju berbanding dengan kuadrat [A]. Contoh: [A] dijadikan 3 kali, laju menjadi 9 kali.</p></div></div>
+<h3 style="margin-top:20px">Perubahan laju saat konsentrasi A diubah (kondisi lain tetap)</h3>
+<div class="scroll"><table><tr><th>Perubahan [A]</th><th>Orde 0</th><th>Orde 1</th><th>Orde 2</th></tr>
+<tr><td>dijadikan 2 kali</td><td>1 kali (tetap)</td><td>2 kali</td><td>4 kali</td></tr>
+<tr><td>dijadikan 3 kali</td><td>1 kali (tetap)</td><td>3 kali</td><td>9 kali</td></tr>
+<tr><td>dijadikan ½ kali</td><td>1 kali (tetap)</td><td>½ kali</td><td>¼ kali</td></tr></table></div>
+<div class="card white"><h3><span class="ic">📈</span>Grafik laju (v) terhadap konsentrasi [A]</h3>
+<div class="scroll"><svg id="graf" viewBox="0 0 400 270" style="width:100%;min-width:320px" role="img" aria-label="Grafik laju terhadap konsentrasi untuk orde nol, satu, dan dua"></svg></div>
+<p style="font-size:.93rem">Grafik ini menunjukkan <b>laju terhadap konsentrasi</b> (bukan konsentrasi terhadap waktu). Skala dibuat dengan k = 1 agar ketiga orde mudah dibandingkan. Orde nol: garis datar. Orde satu: garis lurus dari titik asal. Orde dua: kurva yang makin curam.</p></div></section>
+
+<section><h2><span class="n">4</span>Penentuan orde dari data eksperimen</h2>
+<div class="card lav"><svg class="deco" aria-hidden="true"><use href="#flask"/></svg><h3><span class="ic">📝</span>Reaksi: NO₂(g) + CO(g) → NO(g) + CO₂(g)</h3>
+<div class="scroll"><table><tr><th>Eksperimen</th><th>Laju awal (mol/L·s)</th><th>[NO₂] (mol/L)</th><th>[CO] (mol/L)</th></tr>
+<tr><td>1</td><td>0,0050</td><td>0,10</td><td>0,10</td></tr><tr><td>2</td><td>0,0800</td><td class="cg">0,40</td><td class="fx">0,10</td></tr><tr><td>3</td><td>0,0050</td><td class="fx">0,10</td><td class="cg">0,20</td></tr></table></div>
+<p style="font-size:.93rem">Penanda: <span class="fix">hijau = konsentrasi tetap</span> dan <span class="chg">oranye = konsentrasi berubah</span> (dibandingkan dengan eksperimen 1).</p></div>
+<div class="card white"><h3><span class="ic">🪜</span>Langkah 1. Tuliskan bentuk awal persamaan laju</h3><div class="formula sm">v = k[NO₂]<sup>m</sup>[CO]<sup>n</sup></div><p>Orde m dan n belum diketahui, jadi kita cari dari data.</p></div>
+<div class="card white"><h3><span class="ic">🪜</span>Langkah 2. Orde terhadap NO₂ (nilai m)</h3>
+<p>Pilih eksperimen <b>1 dan 2</b>, karena <span class="fix">[CO] tetap (0,10)</span> dan hanya <span class="chg">[NO₂] berubah</span>. Dengan begitu pengaruh CO hilang saat dibagi.</p>
+<div class="formula sm">v₂/v₁ = ([NO₂]₂/[NO₂]₁)<sup>m</sup></div>
+<div class="formula sm">0,0800/0,0050 = (0,40/0,10)<sup>m</sup> → 16 = 4<sup>m</sup></div>
+<div class="res">4² = 16, maka m = 2 (orde dua terhadap NO₂)</div></div>
+<div class="card white"><h3><span class="ic">🪜</span>Langkah 3. Orde terhadap CO (nilai n)</h3>
+<p>Pilih eksperimen <b>1 dan 3</b>, karena <span class="fix">[NO₂] tetap (0,10)</span> dan hanya <span class="chg">[CO] berubah</span>.</p>
+<div class="formula sm">v₃/v₁ = ([CO]₃/[CO]₁)<sup>n</sup></div>
+<div class="formula sm">0,0050/0,0050 = (0,20/0,10)<sup>n</sup> → 1 = 2<sup>n</sup></div>
+<div class="res">2⁰ = 1, maka n = 0 (orde nol terhadap CO)</div></div>
+<div class="card white"><h3><span class="ic">🪜</span>Langkah 4. Orde total</h3><div class="formula sm">Orde total = m + n = 2 + 0 = 2</div></div>
+<div class="card white"><h3><span class="ic">🪜</span>Langkah 5. Persamaan laju akhir</h3><div class="formula sm">v = k[NO₂]²[CO]⁰ → v = k[NO₂]²</div><p>Karena [CO]⁰ = 1, suku CO tidak perlu ditulis.</p></div></section>
+
+<section><h2><span class="n">5</span>Menulis persamaan laju dan orde total</h2>
+<div class="card peach"><svg class="deco" aria-hidden="true"><use href="#atom"/></svg><h3><span class="ic">💡</span>Cara menulis</h3>
+<p>1) Tulis v = k[A]<sup>x</sup>[B]<sup>y</sup>. 2) Isi x dan y dengan orde hasil eksperimen. 3) Hapus pereaksi yang ordenya 0. 4) Jumlahkan semua orde untuk orde total.</p></div>
+<div class="scroll"><table><tr><th>Reaksi</th><th>Orde (dari eksperimen)</th><th>Persamaan laju</th><th>Orde total</th></tr>
+<tr><td>H₂ + I₂ → 2HI</td><td>H₂ : 1, I₂ : 1</td><td>v = k[H₂][I₂]</td><td>2</td></tr>
+<tr><td>NO₂ + CO → NO + CO₂</td><td>NO₂ : 2, CO : 0</td><td>v = k[NO₂]²</td><td>2</td></tr></table></div></section>
+
+<section><h2><span class="n">6</span>Tetapan laju reaksi (k)</h2>
+<div class="card sage"><svg class="deco" aria-hidden="true"><use href="#tube"/></svg><h3><span class="ic">💡</span>Pengertian</h3>
+<p>Tetapan laju reaksi (k) adalah bilangan yang menghubungkan laju dengan konsentrasi pada persamaan laju. Nilai k tetap pada suhu yang sama. <b>Satuan k bergantung pada orde total reaksi.</b></p></div>
+<div class="card pink"><h3><span class="ic">🪜</span>Menghitung k dari data NO₂ + CO</h3>
+<p><b>1.</b> Persamaan laju: <b>v = k[NO₂]²</b></p>
+<p><b>2.</b> Masukkan data eksperimen 1: v = 0,0050 mol/L·s dan [NO₂] = 0,10 mol/L.</p>
+<p><b>3.</b> Susun ulang: <b>k = v / [NO₂]²</b></p>
+<p><b>4.</b> Hitung: k = 0,0050 / (0,10)² = 0,0050 / 0,010 = 0,50</p>
+<p><b>5.</b> Satuan: (mol/L·s) / (mol/L)² = <span class="unit">L/mol·s</span></p>
+<div class="res">k = 0,50 <span class="unit">L/mol·s</span></div>
+<p><b>Verifikasi dengan eksperimen 2:</b> v = 0,50 × (0,40)² = 0,50 × 0,16 = 0,080 mol/L·s. Cocok dengan data (0,0800).</p></div>
+<div class="scroll"><table><tr><th>Orde total</th><th>Satuan k</th></tr><tr><td>0</td><td>mol/L·s</td></tr><tr><td>1</td><td>s⁻¹</td></tr><tr><td>2</td><td>L/mol·s</td></tr><tr><td>3</td><td>L²/mol²·s</td></tr></table></div></section>
+
+<section><h2><span class="n">7</span>Contoh soal dan pembahasan</h2>
+
+<div class="card blue"><svg class="deco" aria-hidden="true"><use href="#mol"/></svg><h3><span class="ic">📝</span>Contoh 1 (dasar): orde, persamaan laju, dan k</h3>
+<p>Reaksi NO₂(g) + O₃(g) → NO₃(g) + O₂(g) pada 25 °C:</p>
+<div class="scroll"><table><tr><th>Percobaan</th><th>[NO₂] (M)</th><th>[O₃] (M)</th><th>Laju pembentukan O₂ (M/s)</th></tr>
+<tr><td>A</td><td>5,0×10⁻⁵</td><td>1,0×10⁻⁵</td><td>0,022</td></tr><tr><td>B</td><td class="fx">5,0×10⁻⁵</td><td class="cg">2,0×10⁻⁵</td><td>0,044</td></tr><tr><td>C</td><td class="cg">2,5×10⁻⁵</td><td class="fx">2,0×10⁻⁵</td><td>0,022</td></tr></table></div>
+<div class="box dt"><b class="l">Ditanyakan</b>Orde terhadap NO₂ dan O₃, persamaan laju, orde total, serta k.</div>
+<div class="box dk"><b class="l">Rumus</b>v = k[NO₂]<sup>x</sup>[O₃]<sup>y</sup>, lalu bandingkan dua percobaan.</div>
+<div class="box ps"><b class="l">Penyelesaian</b>
+<p>O₃: bandingkan A dan B (<span class="fix">[NO₂] tetap</span>). [O₃] naik 2 kali, laju naik 0,044/0,022 = 2 kali. 2 = 2<sup>y</sup>, maka y = 1.</p>
+<p>NO₂: bandingkan B dan C (<span class="fix">[O₃] tetap</span>). [NO₂] turun menjadi ½ kali, laju turun menjadi 0,022/0,044 = ½ kali. ½ = (½)<sup>x</sup>, maka x = 1.</p>
+<p>Persamaan laju: v = k[NO₂][O₃]. Orde total = 1 + 1 = 2.</p>
+<p>k dari percobaan A: k = 0,022 / (5,0×10⁻⁵ × 1,0×10⁻⁵) = 0,022 / 5,0×10⁻¹⁰ = 4,4×10⁷</p>
+<div class="res">k = 4,4×10⁷ <span class="unit">L/mol·s</span></div></div>
+<div class="box ks"><b class="l">Kesimpulan</b>Reaksi orde 1 terhadap tiap pereaksi dan orde total 2, sehingga satuan k adalah L/mol·s. Cek percobaan C: 4,4×10⁷ × 2,5×10⁻⁵ × 2,0×10⁻⁵ = 0,022. Cocok.</div></div>
+
+<div class="card peach"><svg class="deco" aria-hidden="true"><use href="#flask"/></svg><h3><span class="ic">📝</span>Contoh 2 (sedang): orde 2 dan prediksi laju</h3>
+<p>Reaksi A + B → hasil, data awal:</p>
+<div class="scroll"><table><tr><th>Eksperimen</th><th>[A] (M)</th><th>[B] (M)</th><th>Laju (M/s)</th></tr>
+<tr><td>1</td><td>0,10</td><td>0,10</td><td>0,0050</td></tr><tr><td>2</td><td class="cg">0,20</td><td class="fx">0,10</td><td>0,0100</td></tr><tr><td>3</td><td class="fx">0,10</td><td class="cg">0,30</td><td>0,0450</td></tr></table></div>
+<div class="box dt"><b class="l">Ditanyakan</b>Persamaan laju, k beserta satuannya, dan laju saat [A] = 0,30 M dan [B] = 0,20 M.</div>
+<div class="box ps"><b class="l">Penyelesaian</b>
+<p>Orde A (percobaan 1 dan 2, <span class="fix">[B] tetap</span>): 0,0100/0,0050 = 2 = 2<sup>x</sup>, maka x = 1.</p>
+<p>Orde B (percobaan 1 dan 3, <span class="fix">[A] tetap</span>): 0,0450/0,0050 = 9 = 3<sup>y</sup>, maka y = 2.</p>
+<p>Persamaan laju: v = k[A][B]². Orde total = 3.</p>
+<p>k = 0,0050 / (0,10 × 0,10²) = 0,0050 / 0,0010 = 5,0</p>
+<div class="res">k = 5,0 <span class="unit">L²/mol²·s</span></div>
+<p>Prediksi: v = 5,0 × 0,30 × (0,20)² = 5,0 × 0,30 × 0,040 = <b>0,060 M/s</b>.</p></div>
+<div class="box ks"><b class="l">Kesimpulan</b>[A] naik 3 kali (laju 3 kali) dan [B] naik 2 kali (laju 4 kali), sehingga laju naik 3 × 4 = 12 kali: 0,0050 × 12 = 0,060 M/s. Hasilnya konsisten.</div></div>
+
+<div class="card pink"><svg class="deco" aria-hidden="true"><use href="#atom"/></svg><h3><span class="ic">📝</span>Contoh 3 (menantang): perubahan laju</h3>
+<div class="box dk"><b class="l">Diketahui</b>Persamaan laju v = k[P][Q]². Mula-mula laju = v₁.</div>
+<div class="box dt"><b class="l">Ditanyakan</b>Laju baru jika (a) [P] 2 kali dan [Q] 3 kali, (b) [P] dan [Q] sama-sama menjadi ½ kali.</div>
+<div class="box ps"><b class="l">Penyelesaian</b>
+<p>(a) Faktor laju = (2)¹ × (3)² = 2 × 9 = 18 kali.</p>
+<p>(b) Faktor laju = (½)¹ × (½)² = ½ × ¼ = ⅛ kali.</p></div>
+<div class="box ks"><b class="l">Kesimpulan</b>Setiap faktor perubahan konsentrasi dipangkatkan dengan ordenya sendiri, lalu hasilnya dikalikan. Orde yang berbeda membuat pengaruh tiap pereaksi berbeda.</div></div></section>
+
+<section><h2><span class="n">8</span>Latihan soal pilihan ganda kompleks</h2>
+<div class="card lav"><svg class="deco" aria-hidden="true"><use href="#flask"/></svg><h3><span class="ic">🧪</span>Latihan Soal</h3>
+<p><b>Pilih semua jawaban yang benar. Setiap soal dapat memiliki lebih dari satu jawaban benar.</b> Skor tiap soal = banyaknya pilihan yang kamu nilai tepat (dicentang untuk yang benar, dikosongkan untuk yang salah) dibagi jumlah pilihan.</p></div>
+<div id="soal"></div>
+<div class="btns"><button id="cek">Periksa Jawaban</button><button id="ulang">Coba Lagi</button></div>
+<div id="skor" role="status"></div></section>
+
+<section><h2><span class="n">9</span>Rangkuman</h2>
+<div class="scroll"><table style="text-align:left"><tr><th>Konsep</th><th>Ringkasan</th></tr>
+<tr><td>Bentuk umum</td><td>v = k[A]<sup>x</sup>[B]<sup>y</sup></td></tr>
+<tr><td>Orde dan orde total</td><td>x dan y adalah orde tiap pereaksi dan ditentukan dari eksperimen. Orde total = x + y.</td></tr>
+<tr><td>Menentukan orde</td><td>Bandingkan dua percobaan yang hanya mengubah satu konsentrasi. Faktor laju = (faktor konsentrasi)<sup>orde</sup>.</td></tr>
+<tr><td>Menulis persamaan laju</td><td>Masukkan orde ke rumus umum, hapus pereaksi berorde 0.</td></tr>
+<tr><td>Tetapan laju k</td><td>k = v / ([A]<sup>x</sup>[B]<sup>y</sup>). Satuannya bergantung pada orde total.</td></tr>
+<tr><td>Orde 0 / 1 / 2</td><td>Konsentrasi ×2 → laju ×1 / ×2 / ×4.</td></tr></table></div>
+<div class="card sage"><h3><span class="ic">✨</span>Ingat</h3><p>Orde bukan koefisien reaksi. Selalu cek hasil k dengan percobaan lain.</p></div></section>
+<footer><svg width="40" height="40" aria-hidden="true"><use href="#star"/></svg> <svg width="44" height="44" aria-hidden="true"><use href="#mol"/></svg> <svg width="40" height="40" aria-hidden="true"><use href="#tube"/></svg></footer>
+</main>
+<script>
+(function(){
+var s=document.getElementById('graf'),h='';
+var X=function(a){return 50+a*140},Y=function(v){return 230-v*52};
+h+='<rect x="0" y="0" width="400" height="270" fill="#FFFDF7"/>';
+for(var i=0;i<=4;i++){h+='<line x1="50" x2="340" y1="'+Y(i)+'" y2="'+Y(i)+'" stroke="#E4DEC9"/><text x="40" y="'+(Y(i)+4)+'" font-size="11" text-anchor="end">'+i+'</text>';}
+[0,.5,1,1.5,2].forEach(function(a){h+='<text x="'+X(a)+'" y="248" font-size="11" text-anchor="middle">'+String(a).replace('.',',')+'</text>';});
+h+='<line x1="50" y1="230" x2="345" y2="230" stroke="#2E3A3F" stroke-width="2"/><line x1="50" y1="230" x2="50" y2="14" stroke="#2E3A3F" stroke-width="2"/>';
+var pts=function(n){var p=[];for(var a=0;a<=2.001;a+=.1)p.push(X(a)+','+Y(Math.pow(a,n)).toFixed(1));return p.join(' ')};
+h+='<polyline fill="none" stroke="#40714A" stroke-width="3.5" points="'+pts(0).replace(/(\d+),230\.0/g,'$1,'+Y(1))+'"/>';
+h+='<line x1="50" y1="'+Y(1)+'" x2="330" y2="'+Y(1)+'" stroke="#40714A" stroke-width="3.5"/>';
+h+='<polyline fill="none" stroke="#2F6A9C" stroke-width="3.5" points="'+pts(1)+'"/><polyline fill="none" stroke="#A94B60" stroke-width="3.5" points="'+pts(2)+'"/>';
+h+='<text x="335" y="'+(Y(1)-6)+'" font-size="12" fill="#40714A" font-weight="700" text-anchor="end">orde 0</text><text x="290" y="'+(Y(1.95)+22)+'" font-size="12" fill="#2F6A9C" font-weight="700">orde 1</text><text x="262" y="30" font-size="12" fill="#A94B60" font-weight="700">orde 2</text>';
+h+='<text x="195" y="264" font-size="12" text-anchor="middle">Konsentrasi [A] (mol/L)</text><text transform="translate(14 130) rotate(-90)" font-size="12" text-anchor="middle">Laju reaksi v (mol/L·s)</text>';
+s.innerHTML=h;
+var Q=[
+{t:'Data reaksi P + Q → hasil:<div class="scroll"><table><tr><th>No</th><th>[P] (M)</th><th>[Q] (M)</th><th>v (M/s)</th></tr><tr><td>1</td><td>0,2</td><td>0,1</td><td>4×10⁻³</td></tr><tr><td>2</td><td>0,4</td><td>0,1</td><td>1,6×10⁻²</td></tr><tr><td>3</td><td>0,2</td><td>0,3</td><td>1,2×10⁻²</td></tr></table></div>Pernyataan manakah yang benar?',o:[
+['Orde reaksi terhadap P adalah 2.',1,'Percobaan 1 dan 2: [P] ×2, laju ×4 (1,6×10⁻²/4×10⁻³ = 4). 4 = 2², jadi orde 2.'],
+['Orde reaksi terhadap Q adalah 1.',1,'Percobaan 1 dan 3: [Q] ×3, laju ×3 (1,2×10⁻²/4×10⁻³ = 3). 3 = 3¹, jadi orde 1.'],
+['Orde total reaksi adalah 3.',1,'2 + 1 = 3.'],
+['Orde total reaksi adalah 2.',0,'Orde total = 2 + 1 = 3, bukan 2.'],
+['Satuan k adalah L/mol·s.',0,'Untuk orde total 3, satuan k adalah L²/mol²·s (nilai k = 1,0).']]},
+{t:'Suatu reaksi memiliki persamaan laju v = k[A]²[B]. Pernyataan manakah yang benar (kondisi lain tetap)?',o:[
+['[A] dijadikan 2 kali, laju menjadi 4 kali.',1,'Faktor laju = 2² = 4.'],
+['[B] dijadikan 3 kali, laju menjadi 9 kali.',0,'B berorde 1, jadi laju hanya menjadi 3 kali.'],
+['[A] dan [B] sama-sama dijadikan 2 kali, laju menjadi 8 kali.',1,'Faktor laju = 2² × 2¹ = 8.'],
+['[A] dijadikan ½ kali dan [B] dijadikan 2 kali, laju tetap.',0,'Faktor laju = (½)² × 2 = ½, jadi laju menjadi ½ kali, bukan tetap.'],
+['Orde total reaksi adalah 2.',0,'Orde total = 2 + 1 = 3.']]},
+{t:'Data reaksi X + Y → hasil:<div class="scroll"><table><tr><th>No</th><th>[X] (M)</th><th>[Y] (M)</th><th>v (M/s)</th></tr><tr><td>1</td><td>0,1</td><td>0,1</td><td>0,006</td></tr><tr><td>2</td><td>0,3</td><td>0,1</td><td>0,006</td></tr><tr><td>3</td><td>0,1</td><td>0,2</td><td>0,024</td></tr></table></div>Pernyataan manakah yang benar?',o:[
+['Reaksi berorde nol terhadap X.',1,'Percobaan 1 dan 2: [X] ×3, laju tetap. 3⁰ = 1, jadi orde 0.'],
+['Reaksi berorde dua terhadap Y.',1,'Percobaan 1 dan 3: [Y] ×2, laju ×4 (0,024/0,006). 4 = 2², jadi orde 2.'],
+['Persamaan laju: v = k[X][Y]².',0,'X berorde 0 sehingga tidak ditulis: v = k[Y]².'],
+['Nilai k = 0,6 L/mol·s.',1,'k = 0,006 / (0,1)² = 0,6. Orde total 2, satuan L/mol·s.'],
+['Jika [Y] = 0,3 M (X tetap), laju menjadi 0,018 M/s.',0,'v = 0,6 × (0,3)² = 0,054 M/s. Nilai 0,018 salah karena menganggap orde 1.']]},
+{t:'Laju awal tiga reaksi diukur pada [A] = 0,1; 0,2; dan 0,4 M.<div class="scroll"><table><tr><th>Reaksi</th><th>v pada 0,1 M</th><th>v pada 0,2 M</th><th>v pada 0,4 M</th></tr><tr><td>1</td><td>0,02</td><td>0,04</td><td>0,08</td></tr><tr><td>2</td><td>0,01</td><td>0,04</td><td>0,16</td></tr><tr><td>3</td><td>0,05</td><td>0,05</td><td>0,05</td></tr></table></div>Pernyataan manakah yang benar?',o:[
+['Reaksi 1 berorde dua terhadap A.',0,'Laju ×2 saat [A] ×2, jadi reaksi 1 berorde satu.'],
+['Reaksi 2 berorde dua terhadap A.',1,'[A] ×2, laju ×4 (0,04/0,01). Orde 2.'],
+['Reaksi 3 berorde nol terhadap A.',1,'Laju tetap walau [A] berubah, jadi orde 0.'],
+['Reaksi 2 memiliki k = 1,0 L/mol·s.',1,'k = 0,01 / (0,1)² = 1,0. Cek: 0,16 / (0,4)² = 1,0.'],
+['Satuan k reaksi 1 adalah L/mol·s.',0,'Orde 1: satuan k = s⁻¹ (k = 0,02/0,1 = 0,2 s⁻¹).']]},
+{t:'Untuk reaksi NO₂ + CO → NO + CO₂ dengan v = k[NO₂]² dan k = 0,50 L/mol·s, pernyataan manakah yang benar?',o:[
+['[NO₂] = 0,20 M dan [CO] = 0,10 M menghasilkan v = 0,020 M/s.',1,'v = 0,50 × (0,20)² = 0,50 × 0,04 = 0,020.'],
+['[NO₂] = 0,10 M dan [CO] = 0,50 M menghasilkan v = 0,0050 M/s.',1,'CO berorde 0, jadi v = 0,50 × (0,10)² = 0,0050 meskipun [CO] diubah.'],
+['[NO₂] = 0,30 M menghasilkan v = 0,15 M/s.',0,'v = 0,50 × (0,30)² = 0,045 M/s. Nilai 0,15 salah karena tidak dikuadratkan.'],
+['[NO₂] dari 0,10 M menjadi 0,30 M membuat laju 9 kali.',1,'Faktor laju = 3² = 9.'],
+['Menaikkan [CO] akan mempercepat reaksi.',0,'Orde CO = 0, jadi [CO] tidak memengaruhi laju.']]}
+];
+var box=document.getElementById('soal'),done=false;
+Q.forEach(function(q,i){var d=document.createElement('div');d.className='q';
+var x='<h3>Soal '+(i+1)+'</h3><div>'+q.t+'</div>';
+q.o.forEach(function(o,j){x+='<label class="opt" data-q="'+i+'" data-o="'+j+'"><input type="checkbox"><span><b>'+'ABCDE'[j]+'.</b> '+o[0]+'<span class="why"></span></span></label>';});
+x+='<div class="qs"></div>';d.innerHTML=x;box.appendChild(d);});
+box.addEventListener('change',function(e){if(done)return;e.target.closest('.opt').classList.toggle('sel',e.target.checked)});
+document.getElementById('cek').onclick=function(){
+if(done)return;done=true;var tot=0,n=0;
+document.querySelectorAll('.q').forEach(function(d,i){d.classList.add('checked');var sc=0;
+d.querySelectorAll('.opt').forEach(function(l,j){var o=Q[i].o[j],c=l.querySelector('input'),right=(c.checked===!!o[1]);if(right)sc++;
+c.disabled=true;l.classList.remove('sel');l.classList.add(right?'ok':'bad');
+l.querySelector('.why').innerHTML='<br>'+(o[1]?'Pernyataan BENAR. ':'Pernyataan SALAH. ')+(right?'Penilaianmu tepat. ':'Penilaianmu keliru. ')+o[2];});
+var f=sc/Q[i].o.length;tot+=f;n++;d.querySelector('.qs').textContent='Skor soal ini: '+sc+' dari '+Q[i].o.length+' pilihan tepat'+(sc==Q[i].o.length?' (benar penuh)':'');});
+var k=document.getElementById('skor');k.style.display='block';k.textContent='Skor total: '+(tot/n*100).toFixed(0)+' dari 100 ('+tot.toFixed(1).replace('.',',')+' dari '+n+' poin). Baca pembahasan tiap pilihan di atas.';k.scrollIntoView({behavior:'smooth',block:'nearest'});};
+document.getElementById('ulang').onclick=function(){done=false;document.querySelectorAll('.q').forEach(function(d){d.classList.remove('checked');});
+document.querySelectorAll('.opt').forEach(function(l){l.className='opt';var c=l.querySelector('input');c.checked=false;c.disabled=false;});
+var k=document.getElementById('skor');k.style.display='none';box.scrollIntoView({behavior:'smooth'});};
+})();
+</script></body></html>
